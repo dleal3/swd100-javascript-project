@@ -2,43 +2,45 @@
 // [x] - Create a variable that calls an input element by id.
 // [x] - Create variables that will keep track of the data we are intersted in.
 // [x] - Add eventListener to the calculate button so when user clicks on the button it will run a function.
- window.onload = function (){
-    
-    
-     var input = document.getElementById('input');
-     var calculate = document.getElementById('calculate');
-     
-     
-     var totalWords = 0;
-     var totalSentences = 0;
-     var totalSpaces = 0;
-     var averageWords = 0;
-     
-     calculate.addEventListener('click', function(){
-      var textToAnalyze = input.value;
-      for(var i = 0; i < textToAnalyze.length; i++){
-       if (isWord(textToAnalyze[i])){
-        totalWords++;
-        incrementWordCount(textToAnalyze[i]);
-       };
-      };
-      
-      document.getElementById(totalWords).innerHTML = totalWords;
-     });
-     
-     
-     function isWord(letter){
-      
-       return letter == 'a' || letter== 'b' || letter == 'c'|| letter == 'd'||  letter == 'e'|| letter == 'f' ||  letter == 'g'||  letter == 'h'||  letter == 'i'||  letter == 'j'||  letter == 'k'||  letter == 'l'||  letter == 'm'||  letter == 'n'||  letter == 'o'||  letter == 'p'||  letter == 'q'||  letter == 'r'||  letter == 's'||  letter == 't'||  letter == 'u'||  letter == 'v'||  letter == 'w'||  letter == 'x'||  letter == 'y'||  letter == 'z';
-      
-     };
-     
-     function incrementWordCount(letter){
-      if (letter == 'a' || letter == 'b' || letter == 'c' || letter == 'd' || letter == 'e' || letter == 'f' || letter == 'g' || letter == 'h' || letter == 'i' || letter == 'j' ||letter == 'k' || letter == 'l' || letter == 'm' || letter == 'n' || letter == 'o' || letter == 'p' || letter == 'q' || letter == 'r' || letter == 's' || letter == 't' || letter == 'u' || letter == 'v' || letter == 'w' || letter == 'x' || letter == 'y' || letter == 'z') {
-       totalWords++;
-      };
-      
-      
-     };
-     
- };
+
+window.onload = function() {
+
+    // Declare <textarea> and <button> variables
+    var input = document.getElementById('input');
+    var calculate = document.getElementById('calculate');
+
+    // Declare <span> variables
+    var totalWords = 0;
+    var totalSentences = 0;
+    var avWordsPerSent = 0;
+    var totalSpaces = 0;
+
+    // Create EventListener to check for button click
+    calculate.addEventListener('click', function() {
+
+        // variable created for text inside <textarea>
+        var textToAnalyze = input.value;
+        
+        // Iterates through strings to check 
+        // for totalWords and totalSentences
+        for(var i = 0; i < textToAnalyze.length; i++) {
+            if(hasSpaces(textToAnalyze[i])) {
+                totalSpaces++;
+                hasSpaces(textToAnalyze[i]);
+                totalWords = totalSpaces + 1;
+                avWordsPerSent = totalWords / totalSentences;
+            }
+        }
+
+        // Hook up <span> Elements to variables above
+        document.getElementById('totalWords').innerHTML = totalWords;
+        document.getElementById('totalSentences').innerHTML = totalSentences;
+        document.getElementById('avWordsPerSent').innerHTML = avWordsPerSent;
+        document.getElementById('totalSpaces').innerHTML = totalSpaces;
+    });
+
+    // Checks for spaces in textarea 
+    function hasSpaces(s) {
+        return s.indexOf(' ') >= 0;
+    }
+}
